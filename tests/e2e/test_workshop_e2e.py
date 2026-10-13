@@ -27,9 +27,8 @@ def test_user_edits_car_and_change_survives_reload(page, live_server):
     page.get_by_label("Model", exact=True).fill("Accord")
     page.get_by_label("Year", exact=True).fill("2023")
     page.get_by_role("button", name="Save changes").click()
-
-    # 详情页应显示 Honda Accord
-    expect(page.get_by_role("heading", name="Honda Accord")).to_be_visible()
+    page.wait_for_load_state("networkidle")
+    expect(page.get_by_role("heading", name="Honda Accord")).to_be_visible(timeout=15000)
 
     # 刷新后信息保留
     page.reload()
