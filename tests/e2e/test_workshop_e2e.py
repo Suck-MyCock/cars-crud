@@ -28,8 +28,8 @@ def test_user_edits_car_and_change_survives_reload(page, live_server):
     page.get_by_label("Year", exact=True).fill("2023")
     page.get_by_role("button", name="Save changes").click()
     page.wait_for_load_state("networkidle")
+    print(page.content())
     expect(page.get_by_role("heading", name="Honda Accord")).to_be_visible(timeout=15000)
-
     # 刷新后信息保留
     page.reload()
     expect(page.locator("#car-model")).to_have_text("Accord")
